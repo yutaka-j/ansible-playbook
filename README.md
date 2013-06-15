@@ -79,7 +79,7 @@ changed: [192.168.33.12] => (item=msgpack-rpc-python)
 changed: [192.168.33.12] => (item=requests)
 
 TASK: [Git clone my repos] **************************************************** 
-changed: [192.168.33.12] => (item={'repo': 'https://github.com/yutaka-j/capture-page.git', 'dest': '~/repos/capture-page'})
+changed: [192.168.33.12] => (item={'repo': 'https://github.com/yutaka-j/ansible-playbook.git', 'dest': '~/repos/ansible-playbook'})
 
 PLAY RECAP ******************************************************************** 
 192.168.33.12              : ok=8    changed=7    unreachable=0    failed=0   
@@ -121,7 +121,7 @@ ok: [192.168.33.12] => (item=msgpack-rpc-python)
 ok: [192.168.33.12] => (item=requests)
 
 TASK: [Git clone my repos] **************************************************** 
-ok: [192.168.33.12] => (item={'repo': 'https://github.com/yutaka-j/capture-page.git', 'dest': '~/repos/capture-page'})
+ok: [192.168.33.12] => (item={'repo': 'https://github.com/yutaka-j/ansible-playbook.git', 'dest': '~/repos/ansible-playbook'})
 
 PLAY RECAP ******************************************************************** 
 192.168.33.12              : ok=8    changed=0    unreachable=0    failed=0   
