@@ -137,3 +137,22 @@ PLAY RECAP ********************************************************************
   chshがパスワード聞いてくるのでうまく行かない様子．
 - templateモジュールでvarsの展開  
   なぜか展開されなかった･･･
+
+## エラー
+こんなエラーが出た場合，パスワードが間違っているので，再度`ansible-playbook`をやり直す．
+
+```
+PLAY [local] ****************************************************************** 
+
+GATHERING FACTS *************************************************************** 
+fatal: [192.168.33.12] => {'msg': 'FAILED: Authentication failed.', 'failed': True}
+
+TASK: [Install editor] ******************************************************** 
+FATAL: no hosts matched or all hosts have already failed -- aborting
+
+
+PLAY RECAP ******************************************************************** 
+           to retry, use: --limit @/var/tmp/ansible/main.retry
+
+192.168.33.12              : ok=0    changed=0    unreachable=1    failed=0   
+```
