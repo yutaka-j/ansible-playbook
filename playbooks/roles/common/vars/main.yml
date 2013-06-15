@@ -1,0 +1,35 @@
+---
+# roles/common/vars/main.yml
+
+editor:
+    - emacs
+
+basic_pkgs:
+    - zip
+    - curl
+    - tmux
+    - zsh
+
+devel_pkgs:
+    - build-essential
+    - git
+    - python-dev
+    - python-setuptools
+    - python-pip
+
+python_pkgs:
+    - ipython
+    - Flask
+    - pep8
+    - parse
+    - PIL
+    - msgpack-python
+    - msgpack-rpc-python
+    - requests
+
+my_repos:
+    - {repo: 'https://github.com/yutaka-j/capture-page.git', dest: '~/repos/capture-page'}
+
+# config_files:
+#     - {src: 'zshrc.j2', dest: '~/.zshrc', owner: 'vagrant', group: 'vagrant', mode '0644'}
+#     - {src: 'tmux.conf.j2', dest: '~/.tmux.conf', owner: 'vagrant', group: 'vagrant', mode '0644'}

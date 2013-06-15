@@ -1,0 +1,9 @@
+---
+# main.yml
+
+- hosts: local
+  user: vagrant
+  sudo: True
+  tags: local
+  roles:
+      - common
