@@ -28,7 +28,7 @@ python_pkgs:
     - requests
 
 my_repos:
-    - {repo: 'https://github.com/yutaka-j/capture-page.git', dest: '~/repos/capture-page'}
+    - {repo: 'https://github.com/yutaka-j/ansible-playbook.git', dest: '~/repos/ansible-playbook'}
 
 # config_files:
 #     - {src: 'zshrc.j2', dest: '~/.zshrc', owner: 'vagrant', group: 'vagrant', mode '0644'}
