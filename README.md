@@ -53,6 +53,10 @@ PLAY [local] ******************************************************************
 GATHERING FACTS *************************************************************** 
 ok: [192.168.33.12]
 
+TASK: [Write sources.list] **************************************************** 
+changed: [192.168.33.12] => (item={'dest': '/etc/apt/sources.list', 'src': 'sources.list.j2', 'group': 'root',
+ 'mode': '0664', 'owner': 'root'})
+
 TASK: [Install editor] ******************************************************** 
 changed: [192.168.33.12] => (item=emacs)
 
@@ -61,12 +65,6 @@ changed: [192.168.33.12] => (item=zip,curl,tmux,zsh)
 
 TASK: [Install basic devel pkgs] ********************************************** 
 changed: [192.168.33.12] => (item=build-essential,git,python-dev,python-setuptools,python-pip)
-
-TASK: [Write tmux config file] ************************************************ 
-changed: [192.168.33.12]
-
-TASK: [Write zsh config file] ************************************************* 
-changed: [192.168.33.12]
 
 TASK: [Pip install basic python pkgs] ***************************************** 
 changed: [192.168.33.12] => (item=ipython)
@@ -81,8 +79,15 @@ changed: [192.168.33.12] => (item=requests)
 TASK: [Git clone my repos] **************************************************** 
 changed: [192.168.33.12] => (item={'repo': 'https://github.com/yutaka-j/ansible-playbook.git', 'dest': '~/repos/ansible-playbook'})
 
+TASK: [Write config files] **************************************************** 
+changed: [192.168.33.12] => (item={'dest': '~/.zshrc', 'src': 'zshrc.j2', 'group': 'vagrant', 'mode': '0644', 'owner': 'vagrant'})
+changed: [192.168.33.12] => (item={'dest': '~/.tmux.conf', 'src': 'tmux.conf.j2', 'group': 'vagrant', 'mode': '0644', 'owner': 'vagrant'})
+
+TASK: [Change default shell] ************************************************** 
+changed: [192.168.33.12] => (item={'shell': '/bin/zsh', 'user': 'vagrant'})
+
 PLAY RECAP ******************************************************************** 
-192.168.33.12              : ok=8    changed=7    unreachable=0    failed=0   
+192.168.33.12              : ok=9    changed=8    unreachable=0    failed=0   
 ```
 
 冪等性とやらで，2回目の実行時は，環境に変化がなければ何もしない．(changed=0になる)
@@ -95,6 +100,9 @@ PLAY [local] ******************************************************************
 GATHERING FACTS *************************************************************** 
 ok: [192.168.33.12]
 
+TASK: [Write sources.list] **************************************************** 
+ok: [192.168.33.12] => (item={'dest': '/etc/apt/sources.list', 'src': 'sources.list.j2', 'group': 'root', 'mode': '0664', 'owner': 'root'})
+
 TASK: [Install editor] ******************************************************** 
 ok: [192.168.33.12] => (item=emacs)
 
@@ -103,12 +111,6 @@ ok: [192.168.33.12] => (item=zip,curl,tmux,zsh)
 
 TASK: [Install basic devel pkgs] ********************************************** 
 ok: [192.168.33.12] => (item=build-essential,git,python-dev,python-setuptools,python-pip)
-
-TASK: [Write tmux config file] ************************************************ 
-ok: [192.168.33.12]
-
-TASK: [Write zsh config file] ************************************************* 
-ok: [192.168.33.12]
 
 TASK: [Pip install basic python pkgs] ***************************************** 
 ok: [192.168.33.12] => (item=ipython)
@@ -123,11 +125,18 @@ ok: [192.168.33.12] => (item=requests)
 TASK: [Git clone my repos] **************************************************** 
 ok: [192.168.33.12] => (item={'repo': 'https://github.com/yutaka-j/ansible-playbook.git', 'dest': '~/repos/ansible-playbook'})
 
+TASK: [Write config files] **************************************************** 
+ok: [192.168.33.12] => (item={'dest': '~/.zshrc', 'src': 'zshrc.j2', 'group': 'vagrant', 'mode': '0644', 'owner': 'vagrant'})
+ok: [192.168.33.12] => (item={'dest': '~/.tmux.conf', 'src': 'tmux.conf.j2', 'group': 'vagrant', 'mode': '0644', 'owner': 'vagrant'})
+
+TASK: [Change default shell] ************************************************** 
+ok: [192.168.33.12] => (item={'shell': '/bin/zsh', 'user': 'vagrant'})
+
 PLAY RECAP ******************************************************************** 
-192.168.33.12              : ok=8    changed=0    unreachable=0    failed=0   
+192.168.33.12              : ok=9    changed=0    unreachable=0    failed=0   
 ```
 
-## TODO？
+## TODO
 一部のplaybookでコメントアウトしてある部分がある．
 
 それをちゃんと動かせるようにしたいな･･･
