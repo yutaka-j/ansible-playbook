@@ -1,6 +1,11 @@
 ---
 # roles/common/tasks/main.yml
 
+- name: Write sources.list
+  template: src={{item.src}} dest={{item.dest}} owner={{item.owner}} group={{item.group}} mode={{item.mode}}
+  with_items: ${sources_list}
+  tags: sources-list
+
 - name: Install editor
   apt: pkg={{item}} force=yes update_cache=yes
   with_items: ${editor}
@@ -16,21 +21,6 @@
   with_items: ${devel_pkgs}
   tags: devel-pkgs
 
-- name: Write tmux config file
-  sudo: False
-  template: src=tmux.conf.j2 dest=~/.tmux.conf owner=vagrant group=vagrant mode=0644
-  tags: tmux-config
-
-- name: Write zsh config file
-  sudo: False
-  template: src=zshrc.j2 dest=~/.zshrc owner=vagrant group=vagrant mode=0644
-  tags: zsh-config
-
-# - name: Change default shell
-#   sudo: False
-#   command: /usr/bin/chsh -s /bin/zsh
-#   tags: chsh
-
 - name: Pip install basic python pkgs
   pip: name={{item}}
   with_items: ${python_pkgs}
@@ -38,12 +28,17 @@
 
 - name: Git clone my repos
   sudo: False
-  git: repo={{item['repo']}} dest={{item['dest']}}
+  git: repo={{item.repo}} dest={{item.dest}}
   with_items: ${my_repos}
   tags: my-repos
 
-# - name: Write config files
-#   sudo: False
-#   template: src={{item['src']}} dest={{item['dest']}} owner={{item['owner']}} group={{['group']}} mode={{item['mode']}}
-#   with_items: ${config_files}
-#   tags: config-files
+- name: Write config files
+  sudo: False
+  template: src={{item.src}} dest={{item.dest}} owner={{item.owner}} group={{item.group}} mode={{item.mode}}
+  with_items: ${config_files}
+  tags: config-files
+
+- name: Change default shell
+  user: name={{item.user}} shell={{item.shell}}
+  with_items: ${default_shell}
+  tags: default-shell

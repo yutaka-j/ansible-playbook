@@ -1,6 +1,13 @@
 ---
 # roles/common/vars/main.yml
 
+sources_list:
+    - src: 'sources.list.j2'
+      dest: '/etc/apt/sources.list'
+      owner: 'root'
+      group: 'root'
+      mode: '0664'
+
 editor:
     - emacs
 
@@ -28,8 +35,21 @@ python_pkgs:
     - requests
 
 my_repos:
-    - {repo: 'https://github.com/yutaka-j/ansible-playbook.git', dest: '~/repos/ansible-playbook'}
+    - repo: 'https://github.com/yutaka-j/ansible-playbook.git'
+      dest: '~/repos/ansible-playbook'
 
-# config_files:
-#     - {src: 'zshrc.j2', dest: '~/.zshrc', owner: 'vagrant', group: 'vagrant', mode '0644'}
-#     - {src: 'tmux.conf.j2', dest: '~/.tmux.conf', owner: 'vagrant', group: 'vagrant', mode '0644'}
+config_files:
+    - src: 'zshrc.j2'
+      dest: '~/.zshrc'
+      owner: 'vagrant'
+      group: 'vagrant'
+      mode: '0644'
+    - src: 'tmux.conf.j2'
+      dest: '~/.tmux.conf'
+      owner: 'vagrant'
+      group: 'vagrant'
+      mode: '0644'
+
+default_shell:
+    - user: 'vagrant'
+      shell: '/bin/zsh'
