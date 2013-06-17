@@ -1,51 +1,53 @@
 # ansible-playbook
 ansibleでいろいろ遊ぶためのplaybookを貯める場所．
 
-普段はサーバ管理が割とメインな割に，今まで自動化して来なかったので，勉強も兼ねている．
+普段はサーバ管理が割とメインな割に,今まで自動化して来なかったので,勉強も兼ねている．
 
 ## 前提
-練習用なので，基本的にはvagrantで動かすことを想定している．
+練習用なので,基本的にはvagrantで動かすことを想定している.
 
 おそらく必要なのは以下のもの
 - VirtualBox 4.2.x
 - vagrant 1.2
 - ansible 1.2
 
-細かいインストール方法とかに関してはブロクに書いた．
+細かいインストール方法とかに関してはブロクに書いた.
 - [VirtualBox導入](http://yutaka-j.hatenablog.com/entry/2013/06/14/100511)
 - [vagrant導入](http://yutaka-j.hatenablog.com/entry/2013/06/14/141749)
-- (近いうちにansible導入も書く)
+- [ansible導入](http://yutaka-j.hatenablog.com/entry/2013/06/15/154805)
 
 ## 使い方
-このリポジトリをクローンしてVMを起動．
+このリポジトリをクローンしてVMを起動.
 
-ちなみに，boxはprecise32なので，持ってない場合はダウンロードが始まります．
+ちなみに,boxはprecise32なので,持ってない場合はダウンロードが始まります.
+
 ```
 git clone https://github.com/yutaka-j/ansible-playbook.git
 cd ansible-playbook
 vagrant up
 ```
 
-playbooksへ移動して，`ansible-playbook`する．
+playbooksへ移動して, `ansible-playbook` する.
 
--Dを追加して実行すると，実際に裏で何をやってるか見れる．デバッグとかにどうぞ．
+`-D` を追加して実行すると,実際に裏で何をやってるか見れる.デバッグとかにどうぞ.
+
 ```
 cd playbooks
 ansible-playbook main.yml -i hosts/local -k
-# ansible-playbook main.yml -i hosts/local -k -D
 ```
 
-SSHのパスワードを聞いてくるので「vagrant」と入力したら，ansibleが走る．
+SSHのパスワードを聞いてくるので「vagrant」と入力したら,ansibleが走る.
+
 ```
 SSH password:
 ```
 
 ## 実行結果
-多分こんなかんじになる．
+多分こんなかんじになる.
 
-失敗した場合は適当に直してね．
+失敗した場合は適当に直してね.
 
-(roles使ってるので，ansible1.2じゃないと動かない)
+(roles使ってるので,ansible1.2じゃないと動かない)
 
 ```
 PLAY [local] ****************************************************************** 
@@ -87,12 +89,12 @@ TASK: [Change default shell] **************************************************
 changed: [192.168.33.12] => (item={'shell': '/bin/zsh', 'user': 'vagrant'})
 
 PLAY RECAP ******************************************************************** 
-192.168.33.12              : ok=9    changed=8    unreachable=0    failed=0   
+192.168.33.12              : ok=9    changed=8    unreachable=0    failed=0 
 ```
 
-冪等性とやらで，2回目の実行時は，環境に変化がなければ何もしない．(changed=0になる)
+冪等性とやらで,2回目の実行時は,環境に変化がなければ何もしない.(changed=0になる)
 
-(つまり`f(f(x)) == f(x)`という事らしい．賢い．)
+(つまり `f(f(x)) == f(x)` という事らしい.賢い.)
 
 ```
 PLAY [local] ****************************************************************** 
@@ -133,23 +135,25 @@ TASK: [Change default shell] **************************************************
 ok: [192.168.33.12] => (item={'shell': '/bin/zsh', 'user': 'vagrant'})
 
 PLAY RECAP ******************************************************************** 
-192.168.33.12              : ok=9    changed=0    unreachable=0    failed=0   
+192.168.33.12              : ok=9    changed=0    unreachable=0    failed=0 
 ```
 
 ## TODO
-以下2つのTODOについて，Twitterでアドバイスをいただけたので，解決しました．
+以下2つのTODOについて,Twitterでアドバイスをいただけたので,解決しました.
 
-ありがとうございました．
+ありがとうございました.
+
+[詳細](http://yutaka-j.hatenablog.com/entry/2013/06/16/115221)
 
 - ansibleでデフォルトのshellを変更(chsh)  
-  chshがパスワード聞いてくるのでうまく行かない様子．  
-  -> userモジュールを使って解決．
+  chshがパスワード聞いてくるのでうまく行かない様子.  
+  -> userモジュールを使って解決.
 - templateモジュールでvarsの展開  
   なぜか展開されなかった･･･  
-  -> 参照の仕方を変えて解決．
+  -> 参照の仕方を変えて解決.
 
 ## エラー
-こんなエラーが出た場合，パスワードが間違っているので，再度`ansible-playbook`をやり直す．
+こんなエラーが出た場合,パスワードが間違っているので,再度 `ansible-playbook` をやり直す.
 
 ```
 PLAY [local] ****************************************************************** 
@@ -164,5 +168,5 @@ FATAL: no hosts matched or all hosts have already failed -- aborting
 PLAY RECAP ******************************************************************** 
            to retry, use: --limit @/var/tmp/ansible/main.retry
 
-192.168.33.12              : ok=0    changed=0    unreachable=1    failed=0   
+192.168.33.12              : ok=0    changed=0    unreachable=1    failed=0 
 ```
